@@ -55,8 +55,11 @@ function create() {
 
     // aggiungiamo il nostro fantasmino
 
-    ghost = game.add.sprite(100,200,'ghost');
+    ghost = game.add.sprite(400,365,'ghost');
     ghost.width = 48; ghost.height = 32;
+    game.physics.arcade.enable(ghost);
+    ghost.body.collideWorldBounds = true;
+
 
 
     //  We need to enable physics on the player
