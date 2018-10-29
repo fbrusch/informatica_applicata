@@ -120,6 +120,10 @@ function update() {
       ghost.body.velocity.x = -100;
     }
 
+    game.physics.arcade.overlap(ghost, player, function() {
+      player.kill();
+    });
+
     if (cursors.left.isDown)
     {
         //  Move to the left
