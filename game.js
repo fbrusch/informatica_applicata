@@ -55,28 +55,8 @@ function create() {
 
     // aggiungiamo il nostro fantasmino
 
-    ghost = game.add.sprite(400,365,'ghost');
-    ghost.width = 48; ghost.height = 32;
-    game.physics.arcade.enable(ghost);
-    ghost.body.collideWorldBounds = true;
-
-    // diamogli velocità iniziale verso destra
-
-    ghost.body.velocity.x = 100;
-
-    // aggiungiamo proprietà specifiche di questo fantasma
-    // i limiti in cui deve pattugliare
-
-    ghost.leftLimit = 400;
-    ghost.rightLimit = 700;
-
-    ghost2 = game.add.sprite(10,200,'ghost');
-    ghost2.width = 48; ghost2.height = 32;
-    game.physics.arcade.enable(ghost2);
-    ghost2.body.velocity.x = 100;
-    ghost2.leftLimit = 10;
-    ghost2.rightLimit = 200;
-
+    ghost = createGhost(400,365,400,700);
+    ghost2 = createGhost(10,200,10,200);
 
 
     //  We need to enable physics on the player
@@ -158,6 +138,16 @@ function update() {
         player.body.velocity.y = -350;
     }
 
+}
+
+function createGhost(x,y,leftLimit, rightLimit) {
+  g = game.add.sprite(x,y,'ghost');
+  g.width = 48; g.height = 32;
+  game.physics.arcade.enable(g);
+  g.body.velocity.x = 100;
+  g.leftLimit = leftLimit;
+  g.rightLimit = rightLimit;
+  return g;
 }
 
 function updateGhost(ghost) {
