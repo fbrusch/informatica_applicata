@@ -60,6 +60,10 @@ function create() {
     game.physics.arcade.enable(ghost);
     ghost.body.collideWorldBounds = true;
 
+    // diamogli velocità iniziale verso destra
+
+    ghost.body.velocity.x = 100;
+
 
 
     //  We need to enable physics on the player
@@ -108,7 +112,13 @@ function update() {
     player.body.velocity.x = 0;
 
 
-    // walker
+    // ghost
+
+    if(ghost.x <= 200) {
+      ghost.body.velocity.x = 100;
+    } else if (ghost.x >= 500) {
+      ghost.body.velocity.x = -100;
+    }
 
     if (cursors.left.isDown)
     {
