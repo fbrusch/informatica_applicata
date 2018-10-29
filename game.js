@@ -6,6 +6,7 @@ function preload() {
     game.load.image('ground', 'assets/platform.png');
     game.load.image('star', 'assets/star.png');
     game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+    game.load.image('ghost', 'assets/ghost.png');
 
 
 }
@@ -51,6 +52,11 @@ function create() {
     player.body.collideWorldBounds = true;
     player.animations.add('left', [0, 1, 2, 3], 10, true);
     player.animations.add('right', [5, 6, 7, 8], 10, true);
+
+    // aggiungiamo il nostro fantasmino
+
+    ghost = game.add.sprite(100,200,'ghost');
+    ghost.width = 48; ghost.height = 32;
 
 
     //  We need to enable physics on the player
