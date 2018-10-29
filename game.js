@@ -70,6 +70,13 @@ function create() {
     ghost.leftLimit = 400;
     ghost.rightLimit = 700;
 
+    ghost2 = game.add.sprite(10,200,'ghost');
+    ghost2.width = 48; ghost2.height = 32;
+    game.physics.arcade.enable(ghost2);
+    ghost2.body.velocity.x = 100;
+    ghost2.leftLimit = 10;
+    ghost2.rightLimit = 200;
+
 
 
     //  We need to enable physics on the player
@@ -121,6 +128,7 @@ function update() {
     // ghost
 
     updateGhost(ghost);
+    updateGhost(ghost2);
 
     if (cursors.left.isDown)
     {
