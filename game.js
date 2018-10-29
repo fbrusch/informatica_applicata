@@ -7,6 +7,7 @@ function preload() {
     game.load.image('star', 'assets/star.png');
     game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
     game.load.image('ghost', 'assets/ghost.png');
+    game.load.image('candy', 'assets/candy.png');
 
 
 }
@@ -57,7 +58,19 @@ function create() {
 
     ghost = createGhost(400,365,400,700);
     ghost2 = createGhost(10,200,10,200);
+    ghost3 = createGhost(200,500,10,800);
 
+    // aggiungiamo un'arma
+
+    weapon = game.add.weapon(1, 'candy');
+    weapon.bullets.setAll("width", 20);
+    weapon.bullets.setAll("height", 20);
+    weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+    weapon.bulletAngleOffset = 90;
+    weapon.bulletSpeed = 400;
+    weapon.fireAngle = 0;
+    weapon.trackSprite(player,10,20);
+    fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
 
     //  We need to enable physics on the player
 
@@ -109,6 +122,7 @@ function update() {
 
     updateGhost(ghost);
     updateGhost(ghost2);
+    updateGhost(ghost3);
 
     if (cursors.left.isDown)
     {
@@ -136,6 +150,10 @@ function update() {
     if (cursors.up.isDown && player.body.touching.down && hitPlatform)
     {
         player.body.velocity.y = -350;
+    }
+
+    if(fireButton.isDown) {
+      weapon.fire();
     }
 
 }
