@@ -64,6 +64,12 @@ function create() {
 
     ghost.body.velocity.x = 100;
 
+    // aggiungiamo proprietà specifiche di questo fantasma
+    // i limiti in cui deve pattugliare
+
+    ghost.leftLimit = 400;
+    ghost.rightLimit = 700;
+
 
 
     //  We need to enable physics on the player
@@ -114,15 +120,7 @@ function update() {
 
     // ghost
 
-    if(ghost.x <= 200) {
-      ghost.body.velocity.x = 100;
-    } else if (ghost.x >= 500) {
-      ghost.body.velocity.x = -100;
-    }
-
-    game.physics.arcade.overlap(ghost, player, function() {
-      player.kill();
-    });
+    updateGhost(ghost);
 
     if (cursors.left.isDown)
     {
@@ -152,6 +150,18 @@ function update() {
         player.body.velocity.y = -350;
     }
 
+}
+
+function updateGhost(ghost) {
+  if(ghost.x <= ghost.leftLimit) {
+    ghost.body.velocity.x = 100;
+  } else if (ghost.x >= ghost.rightLimit) {
+    ghost.body.velocity.x = -100;
+  }
+
+  game.physics.arcade.overlap(ghost, player, function() {
+    player.kill();
+  });
 }
 
 function collectStar (player, star) {
