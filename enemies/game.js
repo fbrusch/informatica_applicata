@@ -62,9 +62,10 @@ function create() {
 
     // aggiungiamo un'arma
 
-    weapon = game.add.weapon(1, 'candy');
+    weapon = game.add.weapon(10, 'candy');
     weapon.bullets.setAll("width", 20);
     weapon.bullets.setAll("height", 20);
+    weapon.setBulletBodyOffset(20, 20);
     weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
     weapon.bulletAngleOffset = 90;
     weapon.bulletSpeed = 400;
@@ -110,6 +111,9 @@ function update() {
     //  Collide the player and the stars with the platforms
     var hitPlatform = game.physics.arcade.collide(player, platforms);
     game.physics.arcade.collide(stars, platforms);
+    game.physics.arcade.collide(weapon.bullets, ghost3, function(w,g) {
+        w.kill();
+    });
 
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
     game.physics.arcade.overlap(player, stars, collectStar, null, this);
