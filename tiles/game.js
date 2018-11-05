@@ -60,3 +60,4 @@ function update() {
     {
         player.body.velocity.y = -200;
     }
+}
