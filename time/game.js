@@ -8,14 +8,22 @@ function preload() {
     game.load.image('star', 'assets/star.png');
     game.load.image('candy', 'assets/candy.png');
     game.load.image('ghost', 'assets/ghost.gif');
+    game.load.image('potion', 'assets/potion.png');
 
 }
 
 var player;
 var cursors;
+var nemico_attivo;
+var player_invincibile;
 
 function create() {
+    
+    player_invincibile = false;
 
+    
+    
+    nemico_attivo = true;
     map = game.add.tilemap('mappa');
     map.addTilesetImage('terreno', 'tiles')
     layer = map.createLayer('livello1');
@@ -40,28 +48,48 @@ function create() {
     game.camera.follow(player);
     layer.resizeWorld();
 
-    weapon = game.add.weapon(10, 'candy');
+    weapon = game.add.weapon(1, 'candy');
     weapon.trackSprite(player, 16,16);
     weapon.bullets.setAll("width",60);
     weapon.bullets.setAll("height", 60);
-    weapon.bulletGravity = 1300;
     weapon.bulletSpeed = 400;
-    weapon.fireAngle = 180;
+    weapon.fireAngle = 90;
+    
+    pozione = game.add.sprite(400, 430, 'potion');
+    game.physics.arcade.enable(pozione);
+    pozione.height = 30;
+    pozione.width = 30;
 }
 
 
 function update() {
 
+    game.physics.arcade.collide(player, pozione, function(player, pozione) {
+        pozione.kill();
+        player_invincibile = true;
+        player.alpha = 0.5;
+    })
     game.physics.arcade.collide(player, layer);
     game.physics.arcade.collide(player, star, function(p,s) {
         s.kill();
     });
     game.physics.arcade.overlap(enemy, player, function(e,p) {
-        p.kill();
+        if(nemico_attivo == true) {
+            if(player_invincibile == false)
+                p.kill();
+
+        }
     })
 
     game.physics.arcade.overlap(enemy, weapon.bullets, function(e,b) {
-        e.kill();
+        e.alpha = 0.5;
+        nemico_attivo = false;
+        //        tra 4 secondi, esegui questo codice:
+        game.time.events.add(Phaser.Timer.SECOND * 4, function() {
+            e.alpha = 1;
+            nemico_attivo = true;
+
+        })
     });
 
     player.body.velocity.x = 0;
